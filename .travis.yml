@@ -1,0 +1,13 @@
+
+language: node_js
+
+node_js:
+  - 7
+
+before_script:
+  - npm i angular-cli -g --silent
+  - npm i angular-cli-ghpages -g --silent
+
+script:
+  - ng build -prod
+  - ngh --repo=https://GH_TOKEN@github.com:bponomarenko/autoconfig-app.git --name="Borys Ponomarenko" --email=bponomarenko@gmail.com
