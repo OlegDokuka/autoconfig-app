@@ -1,3 +1,9 @@
-<md-toolbar>
-{{title}}
-</md-toolbar>
+<ac-header (refresh)="refresh()" (back)="clearSelection()" [selection]="selection"></ac-header>
+
+<md-spinner *ngIf="loading"></md-spinner>
+
+<md-list *ngIf="!loading && environments">
+  <md-list-item *ngFor="let environment of environments; trackBy:trackByName">
+    <ac-environment-row [environment]="environment" (remove)="remove($event)"></ac-environment-row>
+  </md-list-item>
+</md-list>

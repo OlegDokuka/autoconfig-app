@@ -1,0 +1,22 @@
+<md-toolbar color="primary">
+  <button
+    title="Back"
+    md-icon-button
+    (click)="onBack()"
+    [disabled]="loading"
+    *ngIf="selectionLength">
+    <md-icon>check</md-icon>
+  </button>
+  <span *ngIf="selectionLength">Back</span>
+
+  <span *ngIf="!selectionLength">Environments</span>
+  <button
+    title="Refresh"
+    class="refresh-button"
+    md-icon-button
+    (click)="onRefresh()"
+    [disabled]="loading"
+    *ngIf="!selectionLength">
+    <md-icon>refresh</md-icon>
+  </button>
+</md-toolbar>
