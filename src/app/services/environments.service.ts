@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import 'rxjs/add/operator/toPromise';
+
+import { Environment } from '../environment';
 
 @Injectable()
 export class EnvironmentsService {
@@ -7,15 +10,16 @@ export class EnvironmentsService {
 
   constructor(private http: Http) {}
 
-  getAll() {
-    return this.http.get(`${this.baseUrl}environments/`).map(this.toJSON);
+  getAll(): Promise<Environment[]> {
+    return this.http.get(`${this.baseUrl}environments/`)
+      .toPromise()
+      .then(response => response.json() as Environment[]);
+      // Comment previous and uncomment next line when using static mock data
+      // .then(response => response.json().data as Environment[]);
   }
 
-  remove(name: string) {
-    return this.http.delete(`${this.baseUrl}environments/${name}`).map(this.toJSON);
-  }
-
-  private toJSON(resp: Response) {
-    return resp.json();
+  remove(name: string): Promise<any> {
+    return this.http.delete(`${this.baseUrl}environments/${name}`)
+      .toPromise();
   }
 }

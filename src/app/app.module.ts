@@ -2,24 +2,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { AppComponent } from './app.component';
-import { EnvironmentsService } from './services/environments.service';
-import { EnvironmentRowComponent } from './environment-row/environment-row.component';
 import { HeaderComponent } from './header/header.component';
+import { EnvironmentRowComponent } from './environment-row/environment-row.component';
+import { LoaderComponent } from './loader/loader.component';
+
+import { EnvironmentsService } from './services/environments.service';
+import { InMemoryEnvironmentsService }  from './services/in-memory.environments.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EnvironmentRowComponent,
-    HeaderComponent
+    // EnvironmentRowComponent,
+    HeaderComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot()
+    // Uncomment next line to use static mock data
+    // InMemoryWebApiModule.forRoot(InMemoryEnvironmentsService, { delay: 1000 }),
   ],
   providers: [EnvironmentsService],
   bootstrap: [AppComponent]

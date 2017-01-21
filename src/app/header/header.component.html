@@ -1,22 +1,13 @@
-<md-toolbar color="primary">
+<nav class="navbar navbar-light bg-faded d-flex flex-row justify-content-start">
+  <span class="navbar-brand">
+    <img class="logo" src="/assets/favicon.png" width="36" height="36" alt="Backbase" />
+    Environments
+  </span>
   <button
-    title="Back"
-    md-icon-button
-    (click)="onBack()"
-    [disabled]="loading"
-    *ngIf="selectionLength">
-    <md-icon>check</md-icon>
-  </button>
-  <span *ngIf="selectionLength">Back</span>
-
-  <span *ngIf="!selectionLength">Environments</span>
-  <button
+    class="btn btn-primary btn-sm ml-auto"
     title="Refresh"
-    class="refresh-button"
-    md-icon-button
     (click)="onRefresh()"
-    [disabled]="loading"
-    *ngIf="!selectionLength">
-    <md-icon>refresh</md-icon>
+    [disabled]="loading">
+    <i class="material-icons">refresh</i>
   </button>
-</md-toolbar>
+</nav>

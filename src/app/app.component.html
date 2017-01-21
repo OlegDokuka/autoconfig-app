@@ -1,9 +1,14 @@
-<ac-header (refresh)="refresh()" (back)="clearSelection()" [selection]="selection"></ac-header>
+<ac-header (refresh)="load()" [loading]="loading"></ac-header>
 
-<md-spinner *ngIf="loading"></md-spinner>
+<ac-loader class="align-self-center" *ngIf="loading"></ac-loader>
 
-<md-list *ngIf="!loading && environments">
-  <md-list-item *ngFor="let environment of environments; trackBy:trackByName">
-    <ac-environment-row [environment]="environment" (remove)="remove($event)"></ac-environment-row>
-  </md-list-item>
-</md-list>
+<div class="body" *ngIf="!loading && environments">
+  <ul class="list-group">
+    <li
+      class="list-group-item list-group-item-action"
+      *ngFor="let environment of environments; trackBy:trackByName">
+      {{ environment.name }}
+      <!-- <ac-environment-row [environment]="environment" (remove)="remove($event)"></ac-environment-row> -->
+    </li>
+  </ul>
+</div>

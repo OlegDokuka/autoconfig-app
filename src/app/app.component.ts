@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
 
 import { EnvironmentsService } from './services/environments.service';
+import { Environment } from './environment';
 
 @Component({
   selector: 'ac-root',
@@ -10,23 +10,37 @@ import { EnvironmentsService } from './services/environments.service';
 })
 export class AppComponent {
   loading: boolean = false;
-  environments: Object[] = null;
+  environments: Environment[] = null;
   selection: string[] = [];
 
-  constructor(private envService: EnvironmentsService, private snackbar: MdSnackBar) {
+  constructor(private envService: EnvironmentsService) {
     this.load();
   }
 
-  refresh() {
-    this.load();
+  load() {
+    if(this.loading) {
+      return;
+    }
+
+    this.loading = true;
+
+    this.envService.getAll()
+      .then((data: Environment[]) => {
+        this.environments = data.splice(0);
+        this.loading = false;
+      })
+      .catch((error: any) => {
+        console.log(error);
+        this.loading = false;
+      });
   }
 
   remove(name: string) {
     this.envService.remove(name)
-      .subscribe(() => {
-        this.environments = this.environments.filter((env: any) => env.name !== name);
-      },
-      (error: any) => {
+      .then(() => {
+        this.environments = this.environments.filter((env: Environment) => env.name !== name);
+      })
+     .catch((error: any) => {
         console.log(error);
         this.showError('test');
       });
@@ -36,30 +50,10 @@ export class AppComponent {
     this.selection = [];
   }
 
-  trackByName(index: number, env: any) {
+  trackByName(index: number, env: Environment) {
     return env.name;
   }
 
-  private load() {
-    if(this.loading) {
-      return;
-    }
-
-    this.loading = true;
-
-    this.envService.getAll()
-      .subscribe((data: Object[]) => {
-        this.environments = data.splice(0);
-      },
-      (error: any) => {
-        console.log(error);
-      },
-      () => {
-        this.loading = false;
-      });
-  }
-
   private showError(message: string) {
-    this.snackbar.open(`ERROR: ${message}`, 'Close');
   }
 }

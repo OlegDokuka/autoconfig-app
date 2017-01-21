@@ -6,20 +6,21 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  @Input() selection: string[] = [];
+  @Input() loading: boolean;
+  // @Input() selection: string[] = [];
 
   @Output() refresh = new EventEmitter();
-  @Output() back = new EventEmitter();
+  // @Output() back = new EventEmitter();
 
-  get selectionLength() {
-    return this.selection.length;
-  }
+  // get selectionLength() {
+  //   return this.selection.length;
+  // }
 
   onRefresh() {
     this.refresh.emit();
   }
 
-  onBack() {
-    this.back.emit();
-  }
+  // onBack() {
+  //   this.back.emit();
+  // }
 }

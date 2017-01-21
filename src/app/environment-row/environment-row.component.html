@@ -1,17 +1,19 @@
-<!-- <md-checkbox color="primary"></md-checkbox> -->
-<span class="data-block data-name">{{ environment.name }}</span>
+<div *ngIf="environment">
+  <!-- <md-checkbox color="primary"></md-checkbox> -->
+  <span class="data-block data-name">{{ environment.name }}</span>
 
-<button class="menu-item" md-icon-button [mdMenuTriggerFor]="menu">
-  <md-icon>more_vert</md-icon>
-</button>
-
-<md-menu #menu="mdMenu">
-  <a md-menu-item target="__blank" href="http://{{ environment.name }}-editorial.backbase.dev:9080/portalserver/">
-    <md-icon>public</md-icon>
-    <span>Navigate To</span>
-  </a>
-  <button md-menu-item (click)="onRemove()" disabled>
-    <md-icon>delete forever</md-icon>
-    <span>Delete</span>
+  <button class="menu-item" md-icon-button [mdMenuTriggerFor]="menu">
+    <md-icon>more_vert</md-icon>
   </button>
-</md-menu>
+
+  <md-menu #menu="mdMenu">
+    <a md-menu-item target="__blank" href="http://{{ environment.name }}-editorial.backbase.dev:9080/portalserver/">
+      <md-icon>public</md-icon>
+      <span>Navigate To</span>
+    </a>
+    <button md-menu-item (click)="onRemove()" disabled>
+      <md-icon>delete forever</md-icon>
+      <span>Delete</span>
+    </button>
+  </md-menu>
+</div>
