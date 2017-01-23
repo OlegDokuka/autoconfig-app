@@ -5,10 +5,13 @@
 <div class="body" *ngIf="!loading && environments">
   <ul class="list-group">
     <li
-      class="list-group-item list-group-item-action"
+      class="list-group-item" data-class="list-group-item-action"
       *ngFor="let environment of environments; trackBy:trackByName">
-      {{ environment.name }}
-      <!-- <ac-environment-row [environment]="environment" (remove)="remove($event)"></ac-environment-row> -->
+      <ac-environment-row
+        [environment]="environment"
+        (removed)="onRemove($event)">
+      </ac-environment-row>
     </li>
   </ul>
 </div>
+

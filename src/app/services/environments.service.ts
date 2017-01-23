@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
+
 import 'rxjs/add/operator/toPromise';
 
-import { Environment } from '../environment';
+import { Environment, RemoveEnvironmentOptions } from '../types/environment';
 
 @Injectable()
 export class EnvironmentsService {
@@ -13,13 +14,24 @@ export class EnvironmentsService {
   getAll(): Promise<Environment[]> {
     return this.http.get(`${this.baseUrl}environments/`)
       .toPromise()
-      .then(response => response.json() as Environment[]);
-      // Comment previous and uncomment next line when using static mock data
-      // .then(response => response.json().data as Environment[]);
+      .then(response => response.json() as Environment[])
+      // Uncomment next line when using static mock data
+      // .then((response: any) => response.data as Environment[])
+      .catch(this.transformErrorResponse);
   }
 
-  remove(name: string): Promise<any> {
-    return this.http.delete(`${this.baseUrl}environments/${name}`)
-      .toPromise();
+  remove(options: RemoveEnvironmentOptions): Promise<null> {
+    return this.http.delete(`${this.baseUrl}environments/${options.environmentName}`)
+      .toPromise()
+      .catch(this.transformErrorResponse);
+  }
+
+  private transformErrorResponse(error: any) {
+    let message = 'Unexpected server error. Please report an issue to https://github.com/bponomarenko/autoconfig-app/issues';
+    if(error.status === 0) {
+      message = 'Unable to process request due to CORS browser restrictions.';
+    }
+
+    throw new Error(message);
   }
 }

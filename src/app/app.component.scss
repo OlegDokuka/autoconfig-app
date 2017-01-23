@@ -20,7 +20,6 @@ ac-loader {
   min-height: 2em;
 }
 
-.list-group-item:first-child {
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+.list-group-item {
+  border-radius: 0;
 }

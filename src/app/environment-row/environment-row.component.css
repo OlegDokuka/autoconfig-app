@@ -1,20 +1,7 @@
 :host {
-  display: flex;
-  box-sizing: border-box;
-  align-items: center;
   width: 100%;
 }
 
-md-checkbox,
-.menu-item {
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-.data-block {
-  flex-grow: 1;
-
-  .data-name {
-    width: 60px;
-  }
+.env-name {
+  white-space: normal;
 }

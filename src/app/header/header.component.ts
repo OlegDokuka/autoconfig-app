@@ -1,26 +1,34 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit
+} from '@angular/core';
+
+import { User } from '../types/user';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'ac-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  user: User;
   @Input() loading: boolean;
-  // @Input() selection: string[] = [];
-
   @Output() refresh = new EventEmitter();
-  // @Output() back = new EventEmitter();
 
-  // get selectionLength() {
-  //   return this.selection.length;
-  // }
+  constructor(private userService: UserService) {}
+
+  ngOnInit() {
+    this.userService.getUser()
+      .then((currentUser: User) => {
+        this.user = currentUser;
+      });
+  }
 
   onRefresh() {
     this.refresh.emit();
   }
-
-  // onBack() {
-  //   this.back.emit();
-  // }
 }

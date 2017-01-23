@@ -9,13 +9,14 @@ import { HeaderComponent } from './header/header.component';
 import { EnvironmentRowComponent } from './environment-row/environment-row.component';
 import { LoaderComponent } from './loader/loader.component';
 
+import { UserService } from './services/user.service';
 import { EnvironmentsService } from './services/environments.service';
 import { InMemoryEnvironmentsService }  from './services/in-memory.environments.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    // EnvironmentRowComponent,
+    EnvironmentRowComponent,
     HeaderComponent,
     LoaderComponent
   ],
@@ -24,9 +25,9 @@ import { InMemoryEnvironmentsService }  from './services/in-memory.environments.
     FormsModule,
     HttpModule,
     // Uncomment next line to use static mock data
-    // InMemoryWebApiModule.forRoot(InMemoryEnvironmentsService, { delay: 1000 }),
+    // InMemoryWebApiModule.forRoot(InMemoryEnvironmentsService),
   ],
-  providers: [EnvironmentsService],
+  providers: [EnvironmentsService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

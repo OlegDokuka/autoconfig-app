@@ -3,11 +3,14 @@
     <img class="logo" src="/assets/favicon.png" width="36" height="36" alt="Backbase" />
     Environments
   </span>
-  <button
-    class="btn btn-primary btn-sm ml-auto"
-    title="Refresh"
-    (click)="onRefresh()"
-    [disabled]="loading">
-    <i class="material-icons">refresh</i>
-  </button>
+  <span class="ml-auto">
+    <!-- <a class="text-muted" href="#">({{user ? user.username : 'anonym'}})</a> -->
+    <button
+      class="btn btn-primary btn-sm refresh-btn"
+      title="Refresh"
+      (click)="onRefresh()"
+      [disabled]="loading">
+      <i class="material-icons">refresh</i>
+    </button>
+  </span>
 </nav>

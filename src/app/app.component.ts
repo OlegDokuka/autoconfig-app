@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 import { EnvironmentsService } from './services/environments.service';
-import { Environment } from './environment';
+import { Environment } from './types/environment';
+import { showError } from './utils';
 
 @Component({
   selector: 'ac-root',
@@ -11,7 +12,6 @@ import { Environment } from './environment';
 export class AppComponent {
   loading: boolean = false;
   environments: Environment[] = null;
-  selection: string[] = [];
 
   constructor(private envService: EnvironmentsService) {
     this.load();
@@ -23,37 +23,23 @@ export class AppComponent {
     }
 
     this.loading = true;
+    this.environments = null;
 
     this.envService.getAll()
       .then((data: Environment[]) => {
         this.environments = data.splice(0);
-        this.loading = false;
       })
-      .catch((error: any) => {
-        console.log(error);
-        this.loading = false;
-      });
-  }
-
-  remove(name: string) {
-    this.envService.remove(name)
+      .catch(showError)
       .then(() => {
-        this.environments = this.environments.filter((env: Environment) => env.name !== name);
-      })
-     .catch((error: any) => {
-        console.log(error);
-        this.showError('test');
+        this.loading = false;
       });
   }
 
-  clearSelection() {
-    this.selection = [];
+  onRemove(name: string) {
+    this.environments = this.environments.filter((env: Environment) => env.name !== name);
   }
 
   trackByName(index: number, env: Environment) {
     return env.name;
-  }
-
-  private showError(message: string) {
   }
 }

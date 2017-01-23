@@ -1,6 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Environment } from '../environment';
+import { EnvironmentsService } from '../services/environments.service';
+import { UserService } from '../services/user.service';
+import { Environment } from '../types/environment';
+import { User } from '../types/user';
+import { showError } from '../utils';
 
 @Component({
   selector: 'ac-environment-row',
@@ -9,9 +13,32 @@ import { Environment } from '../environment';
 })
 export class EnvironmentRowComponent {
   @Input() environment: Environment;
-  @Output() remove = new EventEmitter<string>();
+  @Output() removed = new EventEmitter<string>();
 
-  onRemove() {
-    this.remove.emit(this.environment.name);
+  constructor(private envService: EnvironmentsService, private userService: UserService) {}
+
+  remove() {
+    if(!this.environment) {
+      return;
+    }
+
+    this.getUser()
+      .then(({ username, password}: User) => ({
+        username,
+        password,
+        environmentName: this.environment.name
+      }))
+      .then(this.envService.remove)
+      .catch(showError);
+  }
+
+  private getUser(): Promise<User> {
+    return this.userService.getUser()
+      .then((user: User) => {
+        if(!user) {
+          throw new Error('No user credentials specified');
+        }
+        return user;
+      });
   }
 }
